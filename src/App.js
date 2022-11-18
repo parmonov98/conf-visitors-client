@@ -5,7 +5,7 @@ import { Route, Switch } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import VisitorList from "./components/users/VisitorList";
+import VisitorList from "./components/visitors/VisitorList";
 
 
 const App = ({ }) => {
