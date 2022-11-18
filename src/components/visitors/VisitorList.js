@@ -4,13 +4,12 @@ import VisitorCreateForm from './VisitorCreateForm';
 import { Plus } from "react-feather";
 import { toast } from 'react-toastify';
 import VisitorItem from './VisitorItem';
+import Pagination from '../CustomPagination';
+import CustomPagination from '../CustomPagination';
 
 const VisitorList = (props) => {
 
-    const { loading, setLoading } = props;
-
-    // console.log(props);
-    // console.log(setLoading, loading);
+    const { setLoading } = props;
 
     let baseURL = `${process.env.REACT_APP_API_URL}`;
 
@@ -24,23 +23,35 @@ const VisitorList = (props) => {
 
     const [visitors, setVisitors] = useState([]);
     const [deleteList, setDeleteList] = useState([]);
+    const [pagination, setPagination] = useState({
+        total: 0,
+        pages: 0,
+        current: 0,
+    })
 
     const [showCreateForm, setShowCreateForm] = useState(false);
 
     const toggleCreateModal = e => setShowCreateForm(!showCreateForm);
 
-    const getVisitors = async () => {
+    const getVisitors = async (page = 1) => {
+        setLoading(true);
         try {
-            const res = await fetch(`${baseURL}/visitors`);
+            const res = await fetch(`${baseURL}/visitors?page=${page}`);
             const resData = await res.json();
             if (resData.status === 'success') {
-                setVisitors(resData.data);
+                setVisitors(resData.data.data);
+                setPagination({
+                    total: resData.data.last_page,
+                    last_page: resData.data.last_page,
+                    current: resData.data.current_page,
+                })
             } else {
                 toast(`Error: ${resData?.message}`);
             }
         } catch (error) {
             toast(`Error: Server error`);
         }
+        setLoading(false);
     }
 
     useEffect(() => {
@@ -192,11 +203,15 @@ const VisitorList = (props) => {
 
                     </div>
 
+                    <div className="row mt-2">
+                        <div className="col-12">
+                            <CustomPagination getPageItems={getVisitors} paginationData={pagination} />
+                        </div>
+                    </div>
                 </div>
             </div>
+
             <VisitorCreateForm is_shown={showCreateForm} toggle={toggleCreateModal} addVisitor={addVisitor} getVisitors={getVisitors} />
-            {/* <UserDeleteForm /> */}
-            {/* <UserUpdateForm /> */}
 
         </Fragment>
     )
