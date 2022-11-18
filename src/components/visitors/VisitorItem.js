@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Check, X } from "react-feather";
 
@@ -19,7 +19,7 @@ const VisitorItem = ({
             <tr>
                 <td>
                     <div className="actions">
-                        <input className='form-check-input' type={"checkbox"} checked={status ? 'checked' : ''} onClick={handleCheckboxClick} />
+                        <input className='form-check-input' type={"checkbox"} checked={status ? 'checked' : ''} onClick={handleCheckboxClick} onChange={e => { }} />
                     </div>
                 </td>
                 <th scope="row">{visitor.id}</th>

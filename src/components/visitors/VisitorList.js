@@ -1,6 +1,4 @@
 import React, { Fragment, useEffect, useState } from 'react';
-// import UserDeleteForm from "./UserDeleteForm";
-// import UserUpdateForm from "./UserUpdateForm";
 import VisitorCreateForm from './VisitorCreateForm';
 
 import { Plus } from "react-feather";
@@ -9,16 +7,20 @@ import VisitorItem from './VisitorItem';
 
 const VisitorList = (props) => {
 
+    const { loading, setLoading } = props;
+
+    // console.log(props);
+    // console.log(setLoading, loading);
+
     let baseURL = `${process.env.REACT_APP_API_URL}`;
 
     if (process.env.REACT_APP_MODE === 'prod') {
         baseURL = `${process.env.REACT_APP_PRODUCTION_APP_API_URL}`;
     }
 
-    if (process.env.REACT_APP_MODE == 'stage') {
+    if (process.env.REACT_APP_MODE === 'stage') {
         baseURL = `${process.env.REACT_APP_STAGING_APP_API_URL}`;
     }
-
 
     const [visitors, setVisitors] = useState([]);
     const [deleteList, setDeleteList] = useState([]);
@@ -43,9 +45,12 @@ const VisitorList = (props) => {
 
     useEffect(() => {
         getVisitors();
+        setLoading(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     const addVisitor = async (inputs) => {
+        setLoading(true);
         const data = {};
         try {
             const res = await fetch(`${baseURL}/visitors`, {
@@ -69,6 +74,7 @@ const VisitorList = (props) => {
             data.status = 'error';
             data.message = `Error: Server error`;
         }
+        setLoading(false);
         return data;
     }
 
@@ -85,6 +91,7 @@ const VisitorList = (props) => {
 
     const deleteSelectedItems = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const data = {};
         try {
             const res = await fetch(`${baseURL}/visitors/bulk`, {
@@ -117,6 +124,7 @@ const VisitorList = (props) => {
         } else {
             toast(data.message, { type: 'success' });
         }
+        setLoading(false);
     }
 
     return (
@@ -131,9 +139,9 @@ const VisitorList = (props) => {
 
                 <div className="row">
                     <div className="col-3">
-                        <a className='btn btn-secondary' onClick={deleteSelectedItems} >
+                        <span className='btn btn-secondary' onClick={deleteSelectedItems} >
                             Delete selected
-                        </a>
+                        </span>
                     </div>
                     <div className="col-md-3">
                         {/* <SearchForm getPageItems={getUsers} /> */}

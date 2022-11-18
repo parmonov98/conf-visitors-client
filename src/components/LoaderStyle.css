@@ -1,0 +1,32 @@
+.progress_bg{
+  display: none;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  height: calc(100vh - 0%);
+  width: calc(100vw - 1%);
+  position: fixed;
+  z-index: 99999;
+
+}
+
+.loading{
+  display: flex;
+}
+
+.loading .icon{
+  animation: rotateInfintely 2s ease-in-out infinite;
+  color: aliceblue;
+}
+
+@keyframes rotateInfintely{
+  0% {
+    transform: rotateZ(0deg);
+  }
+  50% {
+    transform: rotateZ(180deg);
+  }
+  100%{
+    transform: rotateZ(360deg);
+  }
+}

@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useRef, useState } from 'react';
+import React, { Fragment, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 
 import Button from 'react-bootstrap/Button';
@@ -36,7 +36,7 @@ const VisitorCreateForm = ({ addVisitor, getVisitors, toggle, is_shown }) => {
         e.target.oldValue = e.target.value;
         setInputs(prevState => ({ ...prevState, [e.target.name]: e.target.value }));
 
-        if (e.target.name == 'first_name') {
+        if (e.target.name === 'first_name') {
             const is_valid = isNameValid(e.target.value);
             if (!is_valid) {
                 setErrors({ ...errors, first_name: "Invalid First name" });
@@ -47,7 +47,7 @@ const VisitorCreateForm = ({ addVisitor, getVisitors, toggle, is_shown }) => {
         }
 
 
-        if (e.target.name == 'last_name') {
+        if (e.target.name === 'last_name') {
             const is_valid = isNameValid(e.target.value);
             if (!is_valid) {
                 setErrors({ ...errors, last_name: "Invalid Last name" });
@@ -57,7 +57,7 @@ const VisitorCreateForm = ({ addVisitor, getVisitors, toggle, is_shown }) => {
             setErrors(errors);
         }
 
-        if (e.target.name == 'phone') {
+        if (e.target.name === 'phone') {
             const is_valid = isPhoneValid(e.target.value);
             if (!is_valid) {
                 setErrors({ ...errors, phone: "Invalid phone" });
@@ -66,7 +66,7 @@ const VisitorCreateForm = ({ addVisitor, getVisitors, toggle, is_shown }) => {
             delete errors.phone;
             setErrors(errors);
         }
-        if (e.target.name == 'email') {
+        if (e.target.name === 'email') {
             const is_valid = isEmailValid(e.target.value);
             if (!is_valid) {
                 setErrors({ ...errors, email: "Invalid Email" });
@@ -76,7 +76,7 @@ const VisitorCreateForm = ({ addVisitor, getVisitors, toggle, is_shown }) => {
             setErrors(errors);
         }
 
-        if (e.target.name == 'type') {
+        if (e.target.name === 'type') {
             const is_valid = isTypeValid(e.target.value);
             if (!is_valid) {
                 setErrors({ ...errors, type: "Invalid Type" });
@@ -87,7 +87,7 @@ const VisitorCreateForm = ({ addVisitor, getVisitors, toggle, is_shown }) => {
         }
 
 
-        if (e.target.name == 'has_paid') {
+        if (e.target.name === 'has_paid') {
             setInputs(prevState => ({ ...prevState, has_paid: !inputs.has_paid }));
         }
     };
