@@ -102,6 +102,10 @@ const VisitorList = (props) => {
 
     const deleteSelectedItems = async (e) => {
         e.preventDefault();
+        if (deleteList.length == 0) {
+            toast("You have to select at least one item", { type: 'warning' });
+            return;
+        }
         setLoading(true);
         const data = {};
         try {
@@ -133,7 +137,7 @@ const VisitorList = (props) => {
             getVisitors();
             toast(data.message, { type: 'success' });
         } else {
-            toast(data.message, { type: 'success' });
+            toast(data.message, { type: 'error' });
         }
         setLoading(false);
     }
@@ -150,7 +154,7 @@ const VisitorList = (props) => {
 
                 <div className="row">
                     <div className="col-3">
-                        <span className='btn btn-secondary' onClick={deleteSelectedItems} >
+                        <span className={`btn btn-secondary ${deleteList.length == 0 ? 'disabled' : ''}`} onClick={deleteSelectedItems} >
                             Delete selected
                         </span>
                     </div>
